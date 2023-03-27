@@ -1,0 +1,520 @@
+import Logo from '../../assets/logo1.png'
+import { RiShoppingCartLine } from "react-icons/ri";
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
+
+
+
+function Navbar() {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <nav className='navbar'>
+      <div className='flex items-center text-sm font-sans justify-between font-medium pl-5 bg-[#FAF0E6] drop-shadow-lg mt-1 '>
+        <div className='z-50 md:w-auto w-full  justify-between'>
+          <img src={Logo} className=" flex md:cursor-pointer w-24 h-12 mt-2 " />
+        </div>
+        <div className="block md:hidden">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="block text-gray-500 hover:text-green-900 ml-6"
+        >
+          <svg
+            className="h-6 w-6 fill-current"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {isOpen ? (
+              <path d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.828-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.828z" />
+            ) : (
+              <path d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z" />
+            )}
+          </svg>
+        </button>
+        </div>
+        <ul className='md:flex hidden items-center gap-3 pr-10  '>
+          <li>
+            <NavLink to="/" className='nav-link py-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300 '
+            >Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/" className='nav-link py-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300 '
+            >Shop
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/" className='nav-link py-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300 '
+            >Customize
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/" className='nav-link py-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300 '
+            >FAQ
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/" className='nav-link py-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300 '
+            >ContactUs
+            </NavLink>
+          </li>
+        </ul>
+        <div>
+          <RiShoppingCartLine className='md:flex justify-self-auto hidden h-5 w-5 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300 cursor-pointer '/>
+        </div>
+        <div className='flex'>
+          <div className='md:flex hidden mr-5  py-3 px-3 font-sans font-medium'>
+            <NavLink to="/login" className="nav-link pr-5 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300">Login</NavLink>
+          </div>
+        </div>
+        <ul
+          className={`
+        md:hidden bg-[#FAF0E6] fixed top-0 overflow-y-auto bottom-0 py-24 pl-4  md:items-center  md:w-auto 
+        duration-500 ${isOpen ? "opacity-0 scale-y-0" : "opacity-100 scale-y-100"}
+        `}
+        >
+          <li className='py-3 '>
+            <NavLink to="/" className="pb-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300">
+              Home
+            </NavLink>
+          </li>
+          <li className='py-3'>
+            <NavLink  to="/" className="pb-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300">
+              Shop
+            </NavLink>
+          </li>
+          <li className='py-3'>
+            <NavLink to="/" className="py-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300">
+              Customize
+            </NavLink>
+          </li>
+          <li className='py-3'>
+            <NavLink to="/" className="pb-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300">
+              FAQ
+            </NavLink>
+          </li>
+          <li className='py-3'>
+            <NavLink to="/" className="py-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300">
+              AboutUs
+            </NavLink>
+          </li>
+          <li className='py-3'>
+            <NavLink to="/" className="py-3 px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300">
+              <RiShoppingCartLine h-5 w-5 />
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <img src={Logo} alt="" />
+      </div>
+      
+    </nav>
+  )
+};
+
+
+export default Navbar;
+
+
+
+
+
+
+
+<div className='text-white'>
+  <nav className='flex justify-between items-center h-24 max-w-screen-2xl mx-auto px-4 border-b'>
+    {/* <h1 className='w-full text-3xl font-bold hidden md:flex text-[#00df9a]'>
+      CYCLECORE
+    </h1> */}
+
+    <a data-aos="fade-right" data-aos-duration='1000' href="#"><img src={logo} alt="/" className='w-36 mx-2 mt-2'/></a> 
+    
+    
+    <ul data-aos="fade-left" data-aos-duration='1000' className='hidden md:flex font-pop font-semibold items-center'>
+    <form action="" className='relative w-max md:block'>
+      <input type="search" name="search" id="search" className='relative peer z-10 bg-transparent w-6 rounded-lg border cursor-pointer outline-none focus:w-52 focus:border-white focus:cursor-text focus:pl-10 uppercase focus:pr-4 pl-8 duration-700 p-1'   
+      />
+
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="" className="h-6 w-8 absolute left-1 inset-y-0 my-auto stroke-[#d4e253] border-r border-transparent text-white peer-focus:border-[#d4e253] peer-focus:stroke-[#d4e253]">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+      </svg>
+    </form>
+    
+      <NavLink to="/" className='px-4 py-1.5 group border-r'>HOME<div className='h-0.5 bg-white scale-x-0 group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out'></div></NavLink>
+      <NavLink to="/shop" className='px-4 py-1.5 group border-r'>SHOP<div className='h-0.5 bg-white scale-x-0 group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out'></div></NavLink>
+      <NavLink to="/customize" className='px-4 py-1.5 group border-r'>CUSTOMIZE<div className='h-0.5 bg-white scale-x-0 group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out'></div></NavLink>
+      <NavLink to="/faqs" className='px-4 py-1.5 group'>FAQS<div className='h-0.5 bg-white scale-x-0 group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out'></div></NavLink>
+      
+      <button type='button' className='bg-cyan-400 text-white font-pop duration-500 px-6 py-1.5 hover:bg-cyan-500 active:scale-90 rounded-lg  hover:scale-110'>SIGNIN</button>
+    </ul>
+    <div onClick={handleNav} className='flex items-center gap-4 md:hidden'>
+      <form action="" className='relative w-max md:hidden block'>
+        <input type="search" name="search" id="search" className='relative peer z-10 bg-transparent w-6 rounded-lg border cursor-pointer outline-none focus:w-52 focus:border-white focus:cursor-text focus:pl-10 uppercase focus:pr-4 pl-8 duration-700 p-1'   
+        />
+
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="" className="h-6 w-8 absolute left-1 inset-y-0 my-auto stroke-[#d4e253] border-r border-transparent text-white peer-focus:border-[#d4e253] peer-focus:stroke-[#d4e253]">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        </svg>
+      </form>
+      {nav ? <AiOutlineClose size={20}/> : <AiOutlineMenu size={20}/>}
+    </div>
+    <div className={nav ? 'fixed left-0 top-0 w-[60%] z-10 border-r border-r-slate-900 h-full bg-[#000300] ease-in-out duration-500 block md:hidden' : 'block md:hidden fixed left-[-100%]'}>  
+      
+      <NavLink to="/"><img src={Logo} alt="/" className='w-36 mx-2 mt-2'/></NavLink>        
+      <ul className='uppercase p-4 font-semibold font-pop rounded'>
+        <NavLink to="/" className='p-4 group border-b-[1.5px] border-b-slate-600 '>home<div className='h-0.5 bg-white scale-x-0 w-12 group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out'></div></NavLink>
+        <NavLink to="/shop"className='p-4 group border-b-[1.5px] border-b-slate-600 '>shop<div className='h-0.5 bg-white scale-x-0 w-12 group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out'></div></NavLink>
+        <NavLink to="/customize"className='p-4 group border-b-[1.5px] border-b-slate-600 '>customize<div className='h-0.5 bg-white scale-x-0 w-[92px] group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out'></div></NavLink>
+        <NavLink to="/faqs"className='p-4 group'>faqs<div className='h-0.5 bg-white scale-x-0 w-12 group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out'></div></NavLink>
+    <button type='button' className='bg-cyan-400 text-white font-pop duration-500 mt-7 px-6 py-2 hover:bg-cyan-500 rounded hover:scale-110'>SIGNIN</button>
+      </ul>
+    </div>
+  </nav>
+</div>
+)
+};
+
+
+
+
+<div className=''>
+  {!auth?.user ? ( <>
+    <ul className=''>
+        <li>
+          {/* <button className="bg-[#c8f5d9] hover:bg-[#6dec9e] py-2 px-4 rounded-full overflow-hidden">
+            GET STARTED
+          </button> */}
+          {/* <button type="button" className="text-gray-900 bg-gradient-to-r from-green-400 via-green-300 to-green-200 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2 duration-300 "
+          >GET STARTED</button> */}
+          <NavLink to="/login" className="relative px-6 py-3 font-medium text-black group">
+            <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform -translate-x-2 -translate-y-2 bg-[#c8f5d9] group-hover:translate-x-0 group-hover:translate-y-0 rounded-full " />
+            <span className="absolute inset-0 w-full h-full border-2 rounded-full border-green-600" />
+            <span className="relative">Get Started</span>
+          </NavLink>
+         
+          {/* <NavLink to="/login" className="rounded-full border-2 border-green-300" >Get Started</NavLink> */}
+        </li>
+    </ul>
+    </>) : (<a onClick={logout} className="nav-link cursor-pointer px-3 inline-block transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-green-900 duration-300">Logout</a>)}
+
+
+
+
+    <div>
+  <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown divider <svg className="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg></button>
+  {/* Dropdown menu */}
+  <div id="dropdownDivider" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+    <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
+      <li>
+        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+      </li>
+      <li>
+        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+      </li>
+      <li>
+        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+      </li>
+    </ul>
+    <div className="py-2">
+      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Separated link</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div>
+  <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown divider <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+  
+  <div id="dropdownDivider" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+    <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
+      <li><NavLink to="/user/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</NavLink></li>
+      <li><NavLink to="/user/cart" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" >My Cart</NavLink></li>
+    </ul>
+  </div>
+  <div className='py-2'>
+  <li><NavLink to="/login" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" >Logout</NavLink></li>
+  </div>
+</div>
+
+
+
+
+{showModal ? (
+  <>
+    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+      <div className="relative w-auto my-6 mx-auto max-w-3xl">
+        {/*content*/}
+
+        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          {/*header*/}
+          <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+            <h3 className="font-pop text-2xl font-semibold">
+              Add Category
+            </h3>
+            <button
+              className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+              onClick={() => setShowModal(false)}
+            ></button>
+          </div>
+          {/*body*/}
+          <div className="relative p-6 flex-auto">
+            <TextField
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              name="category"
+              placeholder="Write Category"
+              label="Category"
+              size="small"
+              fullWidth
+              focused
+            />
+          </div>
+          {/*footer*/}
+          <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+            <button
+              className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={() => setShowModal(false)}
+            >
+              Close
+            </button>
+            <button
+              className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="submit"
+              onClick={() => {
+                handleSubmit();
+                setShowModal(false);
+              }}
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+  </>
+) : null}
+{updateshowModal ? (
+  <>
+    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+      <div className="relative w-auto my-6 mx-auto max-w-3xl">
+        {/*content*/}
+
+        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          {/*header*/}
+          <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+            <h3 className="font-pop text-2xl font-semibold">
+              Update Category
+            </h3>
+            <button
+              className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+              onClick={() => updatesetShowModal(false)}
+            ></button>
+          </div>
+          {/*body*/}
+          <div>
+            {categories?.map((c) => (
+              <div key={c._id} className="flex">
+                <div className="relative p-6 flex-auto">
+                  <TextField
+                    value={updatingName}
+                    onChange={(e) => setUpdatingName(e.target.value)}
+                    type="text"
+                    name="updatecategory"
+                    placeholder={c.name}
+                    label="Category"
+                    size="small"
+                    fullWidth
+                    focused
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/*footer*/}
+          <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+            <button
+              className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={() => updatesetShowModal(false)}
+            >
+              Close
+            </button>
+            <button
+              className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="submit"
+              onClick={() => {
+                handleUpdate();
+                updatesetShowModal(false);
+              }}
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+  </>
+) : null}
+
+
+
+import { useState, useEffect } from "react";
+import { useAuth } from "../../context/auth";
+import Jumbotron from "../../components/cards/Jumbotron";
+import AdminMenu from "../../components/nav/AdminMenu";
+import axios from "axios";
+import toast from "react-hot-toast";
+import CategoryForm from "../../components/forms/CategoryForm";
+import { Modal } from "antd";
+
+export default function AdminCategory() {
+  // context
+  const [auth, setAuth] = useAuth();
+  // state
+  const [name, setName] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [updatingName, setUpdatingName] = useState("");
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    try {
+      const { data } = await axios.get("/categories");
+      setCategories(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post("/category", { name });
+      if (data?.error) {
+        toast.error(data.error);
+      } else {
+        loadCategories();
+        setName("");
+        toast.success(`"${data.name}" is created`);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Create category failed. Try again.");
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.put(`/category/${selected._id}`, {
+        name: updatingName,
+      });
+      if (data?.error) {
+        toast.error(data.error);
+      } else {
+        toast.success(`"${data.name}" is updated`);
+        setSelected(null);
+        setUpdatingName("");
+        loadCategories();
+        setVisible(false);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Category may already exist. Try again.");
+    }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.delete(`/category/${selected._id}`);
+      if (data?.error) {
+        toast.error(data.error);
+      } else {
+        toast.success(`"${data.name}" is deleted`);
+        setSelected(null);
+        loadCategories();
+        setVisible(false);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Category may already exist. Try again.");
+    }
+  };
+
+  return (
+    <>
+      <Jumbotron
+        title={`Hello ${auth?.user?.name}`}
+        subTitle="Admin Dashboard"
+      />
+
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-3">
+            <AdminMenu />
+          </div>
+          <div className="col-md-9">
+            <div className="p-3 mt-2 mb-2 h4 bg-light">Manage Categories</div>
+
+            <CategoryForm
+              value={name}
+              setValue={setName}
+              handleSubmit={handleSubmit}
+            />
+
+            <hr />
+
+            <div className="col">
+              {categories?.map((c) => (
+                <button
+                  key={c._id}
+                  className="btn btn-outline-primary m-3"
+                  onClick={() => {
+                    setVisible(true);
+                    setSelected(c);
+                    setUpdatingName(c.name);
+                  }}
+                >
+                  {c.name}
+                </button>
+              ))}
+            </div>
+
+            <Modal
+              visible={visible}
+              onOk={() => setVisible(false)}
+              onCancel={() => setVisible(false)}
+              footer={null}
+            >
+              <CategoryForm
+                value={updatingName}
+                setValue={setUpdatingName}
+                handleSubmit={handleUpdate}
+                buttonText="Update"
+                handleDelete={handleDelete}
+              />
+            </Modal>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
