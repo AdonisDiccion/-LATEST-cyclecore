@@ -29,6 +29,7 @@ import SingleProductView from "./pages/user/SingleProductView";
 import UserProfile from "./pages/user/Profile";
 import UserOrders from "./pages/user/Orders";
 import Customize from "./pages/user/Customize";
+import AdminOrders from "./pages/admin/AdminOrders";
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
               <Route path="admin/subcategory" element={<AdminSubCategory />} />
               <Route path="admin/brand" element={<AdminBrands />} />
               <Route path="admin/products" element={<AdminProducts />} />
+              <Route path="admin/orders" element={<AdminOrders />} />
               <Route
                 path="admin/products/create"
                 element={<AdminCreateProduct />}

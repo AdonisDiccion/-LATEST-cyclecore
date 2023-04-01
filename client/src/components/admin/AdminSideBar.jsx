@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
+import { useAuth } from "../../context/Auth";
 
 // icons
 import { BsFillCaretLeftFill } from "react-icons/bs";
@@ -27,6 +28,16 @@ const AdminDashboardSideBar = () => {
   //   { title: 'Sub-Category', icon: GiBasketballBall },
   //   { title: 'Products', icon: FaMailchimp },
   // ]
+
+  const [auth, setAuth] = useAuth();
+
+  const [openOrders, setOpenOrders] = useState(false)
+
+  const logout = () => {
+    setAuth({ ...auth, user: null, token: "" });
+    localStorage.removeItem("auth");
+    navigate("/login");
+  };
 
   const [open, setOpen] = useState(false);
 
@@ -167,9 +178,12 @@ const AdminDashboardSideBar = () => {
               </ul>
             </div>
 
-            <div className="hover:scale-110 group text-slate-100 font-semibold flex items-center hover:bg-light-white rounded-md uppercase cursor-pointer transition-all duration-300 ease-in-out mt-4 p-[7.5px]">
+            <div
+              onClick={() => setOpenOrders(!openOrders)}
+              className={`hover:scale-110 group text-slate-100 font-semibold flex items-center hover:bg-light-white rounded-md uppercase cursor-pointer transition-all duration-300 ease-in-out p-[7.5px]`}
+            >
               <div>
-                <FiShoppingBag size={25} />
+                <FiShoppingBag className="text-slate-100" size={25} />
               </div>
               <span
                 style={{ transitionDelay: "500ms" }}
@@ -182,23 +196,30 @@ const AdminDashboardSideBar = () => {
               </span>
             </div>
           </div>
-          <ul className="">
-            {/* {menus.map((menu,index) => (
-            <li key={index} className="hover:scale-110 group text-slate-100 font-semibold flex items-center p-2.5 hover:bg-light-white rounded-md uppercase cursor-pointer transition-all duration-300 ease-in-out">
-
-            <div className='hover:rotate-[360deg] transition-all duration-700 ease-in-out'><menu.icon className={`hover:rotate-[360deg] transition-all duration-700 ease-in-out ${!open && 'rotate-[360deg]'}`} size={20}/>
-            </div>
-
-            <span className={`${!open && 'opacity-0 translate-x-28 overflow-hidden'} tracking-wider whitespace-pre origin-left duration-300 m-2.5`}>
-              {menu.title}
-            </span>
-
-            <h2 className={`${open && 'hidden'} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900  rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:duration-700 group-hover:left-10 group-hover:w-fit`}>
-              {menu.title}
-            </h2>
-          </li>
-          ))} */}
-          </ul>
+          <div
+            className={`${
+              open
+                ? `${
+                    !openOrders
+                      ? " transition-all duration-500 ease-in-out delay-200 rounded-md pl-7"
+                      : "hidden"
+                  }`
+                : "hidden"
+            }`}
+          >
+            <ul className="">
+              <NavLink
+                to="/dashboard/admin/orders"
+                className={`group hover:scale-110 flex items-center font-semibold gap-x-2 hover:bg-light-white rounded-md uppercase cursor-pointer transition-all duration-300 ease-in-out p-2 text-slate-100`}
+              >
+                <BiCategory fontSize={20} className />
+                <span className="text-slate-100">
+                  ORDER LIST
+                  <div className="h-0.5 bg-white scale-x-0 group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out"></div>
+                </span>
+              </NavLink>
+            </ul>
+          </div>
         </div>
 
         <div className="text-slate-100 flex border-t">
@@ -212,7 +233,9 @@ const AdminDashboardSideBar = () => {
                 !open && "opacity-0 translate-x-28 overflow-hidden"
               } tracking-wider whitespace-pre origin-left duration-300 m-2.5`}
             >
-              LOGOUT
+              <NavLink to="/" onClick={logout}>
+                LOGOUT
+              </NavLink>
             </span>
           </div>
         </div>

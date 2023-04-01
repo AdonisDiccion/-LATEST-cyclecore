@@ -115,7 +115,7 @@ const Navbar = () => {
               <button
                 onClick={() => setIsOpen((prev) => !prev)}
                 type="button"
-                className=" justify-between tracking-wider flex bg-cyan-400 text-white font-pop duration-500 px-6 py-1.5 hover:bg-cyan-500 active:scale-90 rounded-lg  hover:scale-110 items-center"
+                className="justify-between tracking-wider flex bg-cyan-400 text-white font-pop duration-500 px-6 py-1.5 hover:bg-cyan-500 active:scale-90 rounded-lg  hover:scale-110 items-center"
               >
                 {auth?.user?.firstname}
                 {!isOpen ? (
@@ -126,7 +126,7 @@ const Navbar = () => {
               </button>
 
               {isOpen && (
-                <div className="bg-white border border-gray-500 absolute flex top-20 flex-col gap-3 p-2 w-full items-start rounded-lg ">
+                <div className="bg-white border border-gray-500 absolute flex top-20 flex-col gap-3 p-2 w-full items-start rounded-lg z-10">
                   <div className="flex w-full justify-between hover:bg-gray-300 flex-col p-2 gap-3 cursor-pointer rounded-lg">
                     <NavLink
                       to="/dashboard/user/profile"
@@ -249,7 +249,7 @@ const Navbar = () => {
                 </button>
 
                 {isOpen && (
-                  <div className="bg-[#000300] absolute flex top-20 flex-col p-2 w-full items-start rounded-lg border-2 border-white">
+                  <div className="bg-[#fff] absolute flex top-20 flex-col p-2 w-full items-start rounded-lg border-2 border-white">
                     <div className="flex w-full justify-between hover:bg-blue-300 flex-col gap-3 cursor-pointer rounded-r-lg border-l-white">
                       <NavLink to="/user/profile">Profile</NavLink>
                     </div>

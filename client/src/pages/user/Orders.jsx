@@ -50,7 +50,7 @@ export default function UserOrders() {
                 <TableCell><span className="font-varela font-bold text-md">{i + 1}</span></TableCell>
                 <TableCell><span className="font-varela font-bold text-md">{o?.status}</span></TableCell>
                 <TableCell><span className="font-varela font-bold text-md">{o?.buyer?.name}</span></TableCell>
-                <TableCell><span className="font-varela font-bold text-md">{moment(o?.createdAt).fromNow()}</span></TableCell>
+                <TableCell><span className="font-varela font-bold text-md">{moment(o.createdAt).format("MMMM Do YYYY, h:mm:ss")}</span></TableCell>
                 <TableCell><span className="font-varela font-bold text-md">{o?.payment?.success ? 'Success' : 'Failed' }</span></TableCell>
                 <TableCell><span className="font-varela font-bold text-md">{o?.products?.length}</span></TableCell>
               </TableRow>

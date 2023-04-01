@@ -33,7 +33,11 @@ const ProductSlider = () => {
 
   return (
     <div className="bg-cover bg-no-repeat">
-      <div>
+      <div
+        data-aos="slide-right"
+        data-aos-duration="1000"
+        data-aos-delay="500"
+      >
         <img
           src={bg}
           alt=""

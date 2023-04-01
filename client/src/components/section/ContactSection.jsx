@@ -23,7 +23,11 @@ const ContactSection = () => {
 
   return (
     <div>
-      <div>
+      <div
+        data-aos="slide-left"
+        data-aos-duration="1000"
+        data-aos-delay="300"
+      >
         <img
           src={bg}
           alt=""
