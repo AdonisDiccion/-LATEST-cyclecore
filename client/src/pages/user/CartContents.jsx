@@ -14,38 +14,48 @@ const CartContents = () => {
   const cartTotal = () => {
     let total = 0;
     cart.map((item) => {
-      total += item.price;
+      total += item.price * item.quantity;
     });
     return total.toLocaleString("en-US", {
       style: "currency",
       currency: "PHP",
     });
   };
+
+  const totalQuantity = () => {
+    let total = 0;
+    cart.map((item) => {
+      total += item.quantity;
+    });
+    return total;
+  };
+
   return (
     <>
       <div className="mx-auto">
-        <Box className="flex justify-between mx-2 mb-4">
+        <Box className="flex justify-between mx-2 mb-4 border-b-2 border-gray-100">
           <h5 className=" font-varela pt-3">
-            Cart total Items: {`${cart.length}`}
+            {totalQuantity() === 0 ? <h1 className="font-varela font-bold">Your Cart Is Empty</h1> : <h1>Cart total Items: <span className="font-bold">{totalQuantity()}</span></h1>}
+            
           </h5>
         </Box>
 
         {cart?.map((p, index) => (
-          <Grid container alignItems="center" key={index} gap={2}>
+          <Grid container alignItems="center" key={index} gap={7} justifyContent="space-between" className="mb-8">
             <Grid item>
               <img
                 src={`${import.meta.env.VITE_APP_REACT_APP_API}/product/photo/${
                   p._id
                 }`}
-                className="w-24"
+                className="w-28 rounded-md"
               />
             </Grid>
 
             <Grid item>
-              <div className="font-varela justify-center flex mx-auto text-sm text-gray-300">
+              <div className="font-varela justify-center flex mx-auto text-sm text-gray-300 text-center w-20">
                 Name
               </div>
-              <div className="font-varela text-lg">{p.name}</div>
+              <div className="font-varela text-lg text-center">{p.name}</div>
             </Grid>
 
             <Grid item>
@@ -61,23 +71,32 @@ const CartContents = () => {
                 </span>
               </div>
             </Grid>
+
+            <Grid item>
+              <div className="font-varela justify-center flex mx-auto text-sm text-gray-300">
+                Quantity
+              </div>
+              <div className="font-varela mx-auto text-center">
+                <span className="font-bold">{p.quantity}</span>
+              </div>
+            </Grid>
           </Grid>
         ))}
 
         <div className="space-y-3">
-          <Box>
+          <Box className="border-b-2 border-gray-100">
             <span className="font-varela flex justify-center">
-              Your Cart Summary
+              <marquee behavior="" direction="right" className="font-bold">YOUR CART SUMMARY</marquee>
             </span>
           </Box>
           <Box>
             <span className="font-varela flex justify-center">
-              Total: <span className="font-bold">{cartTotal()}</span>
+              Total:<span className="font-bold ml-2">{cartTotal()}</span>
             </span>
           </Box>
           <Box>
-            <Button variant="contained" color="primary" fullWidth>
-              <NavLink to="/cart">View Cart Page</NavLink>
+            <Button variant="contained" color="inherit" fullWidth>
+              <NavLink to="/cart" className="font-varela">View Cart Page</NavLink>
             </Button>
           </Box>
         </div>

@@ -135,7 +135,7 @@ export const secret = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const { firstname, lastname, password, address } = req.body;
+    const { firstname, lastname, password, address, email } = req.body;
     const user = await User.findById(req.user._id);
     // check password length
     if (
@@ -157,6 +157,7 @@ export const updateProfile = async (req, res) => {
         lastname: lastname || user.lastname,
         password: hashedPassword || user.password,
         address: address || user.address,
+        email: email || user.email,
       },
       {
         new: true,
@@ -173,8 +174,20 @@ export const updateProfile = async (req, res) => {
 export const getOrders = async (req, res) => {
   try {
     const orders = await Order.find({ buyer: req.user._id })
-      .populate("products", "photo")
-      .populate("buyer", "name");
+      .populate("products", "photo name")
+      .populate("buyer", "firstname")
+      .sort({ createdAt: "-1" });
+    res.json(orders);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const allOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({})
+      .populate("products", "-photo")
+      .populate("buyer", "firstname lastname");
     res.json(orders);
   } catch (err) {
     console.log(err);

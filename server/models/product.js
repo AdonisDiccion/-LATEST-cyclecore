@@ -37,6 +37,12 @@ const productSchema = new mongoose.Schema ({
         ref: "Brand",
         required: true,
     },
+    stocks: {
+        type: Number
+    },
+    size: {
+        type: String
+    },
     quantity: {
         type: Number,
     },

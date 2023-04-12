@@ -366,6 +366,7 @@ const Parts = () => {
                   </Button>
                 </>
               )}
+             
             </Box>
             <Box className="mt-[2rem] gap-20">
               {activeButtonIndex === 0 && frameCards}
@@ -375,6 +376,10 @@ const Parts = () => {
               {activeButtonIndex === 4 && tireCards}
               {activeButtonIndex === 5 && saddleCards}
             </Box>
+
+            <div className="mt-10">
+                <Button variant="contained" color="info" fullWidth><span className="font-varela">Add To Cart</span></Button>
+              </div>
           </Grid>
         </Grid>
       </div>

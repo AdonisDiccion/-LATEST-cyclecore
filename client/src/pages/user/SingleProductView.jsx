@@ -11,6 +11,8 @@ import {
   DialogActions,
   DialogContentText,
   Button,
+  TextField,
+  ButtonGroup,
 } from "@mui/material";
 import { TiPlusOutline, TiMinusOutline } from "react-icons/ti";
 import ReactImageMagnify from "react-image-magnify";
@@ -18,8 +20,13 @@ import TechSpecs from "../../components/section/TechSpecs";
 import { useCart } from "../../context/Cart";
 import { toast } from "react-toastify";
 import { IoWarning } from "react-icons/io5";
+import { GiShoppingCart } from 'react-icons/gi'
 
 const SingleProductView = () => {
+  // quantity
+  const [quantity, setQuantity] = useState(1);
+  const [availableStock, setAvailableStock] = useState(0);
+
   //context
   const [cart, setCart] = useCart();
   //state
@@ -33,15 +40,17 @@ const SingleProductView = () => {
   const handleMinus = () => {
     added === 0 ? "" : setAdded(added - 1);
   };
+  
 
   useEffect(() => {
     if (params?.slug) loadProduct();
   }, [params?.slug]);
 
-  const loadProduct = async (req, res) => {
+  const loadProduct = async () => {
     try {
       const { data } = await axios.get(`/product/${params.slug}`);
       setProduct(data);
+      setAvailableStock(data.quantity); // set the available stock value
       loadRelated(data._id, data.category._id);
     } catch (err) {
       console.log(err);
@@ -59,6 +68,59 @@ const SingleProductView = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    const cartItem = {
+      ...product,
+      quantity: quantity,
+    };
+  
+    // Check if item already exists in cart
+    const existingCartItem = cart.find((item) => item._id === product._id);
+  
+    if (existingCartItem) {
+      // If item exists, update quantity
+      const updatedCart = cart.map((item) => {
+        if (item._id === product._id) {
+          return { ...item, quantity: item.quantity + quantity };
+        } else {
+          return item;
+        }
+      });
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    } else {
+      // If item does not exist, add to cart
+      setCart([...cart, cartItem]);
+      localStorage.setItem(
+        "cart",
+        JSON.stringify([...cart, cartItem])
+      );
+    }
+    setIsDialogOpen(false);
+    toast.success("Added to Cart", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const handleQuantityChange = (event) => {
+    const { value } = event.target;
+    if (value > availableStock) { // check if entered quantity is greater than available stock
+      setQuantity(availableStock); // if yes, set the quantity to available stock
+    } else if (value < 1) {
+      setQuantity(1); // check if entered quantity is less than 1, if yes, set the quantity to 1
+    } else {
+      setQuantity(parseInt(value)); // otherwise set the entered quantity
+    }
+  };
+    
+  
   return (
     <>
       <Navbar />
@@ -121,48 +183,67 @@ const SingleProductView = () => {
                 </b>
               </span>
               <div className="">
-                <span className="flex items-center gap-4 pt-3">
+                <span className="flex items-center gap-1 font-signika pt-3">
                   <b>Size :</b>
                   <p>IM820BJLFPNA100</p>
                 </span>
-                <span className="flex items-center gap-4 pt-3">
+                <span className="flex items-center gap-1 font-signika pt-3">
                   <b>Est. Weight :</b>
                   <p>312 grams (0.69 lbs)</p>
                 </span>
-                <span className="flex items-center gap-4 pt-3">
+                <span className="flex items-center gap-1 font-signika pt-3">
                   <b>Available :</b>
-                  <p>{product?.quantity - product?.sold}</p>
+                  <p>{product?.stocks - product?.sold}</p>
                 </span>
-                <span className="flex items-center gap-4 pt-3">
+                <span className="flex items-center gap-1 font-signika pt-3">
                   <b>Sold :</b>
                   <p>{product?.sold}</p>
                 </span>
               </div>
 
-              <div className="flex items-center">
-                <button
-                  className="border border-r-0 w-7 rounded rounded-r-none flex  justify-center"
-                  onClick={() => handleMinus()}
-                >
-                  {" "}
-                  <TiMinusOutline size={24} />{" "}
-                </button>
-                <span className="border w-10 flex justify-center">{added}</span>
-                <button
-                  className="border w-7 border-l-0 rounded rounded-l-none flex  justify-center"
-                  onClick={() => setAdded(added + 1)}
-                >
-                  {" "}
-                  <TiPlusOutline size={24} />{" "}
-                </button>
+              <div>
+              <TextField
+                label="Quantity"
+                size="medium"
+                type="number"
+                InputLabelProps={{ shrink: true }}
+                variant="outlined"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                InputProps={{
+                  inputProps: {
+                    min: 1,
+                    max: product?.stocks - product?.sold,
+                  },
+                  endAdornment: (
+                    <ButtonGroup variant="outlined" size="small">
+                      <Button color="inherit" onClick={() => setQuantity(quantity - 1)} disabled={quantity <= 1}>
+                        <TiMinusOutline />
+                      </Button>
+                      <Button color="inherit" onClick={() => setQuantity(quantity + 1)} disabled={quantity >= product?.stocks - product?.sold}>
+                        <TiPlusOutline />
+                      </Button>
+                    </ButtonGroup>
+                  ),
+                  disabled: quantity >= product?.stocks - product?.sold,
+                }}
+              />
+
               </div>
 
-              <button
+
+              <Button
                 onClick={() => setIsDialogOpen(true)}
                 className="bg-[#656565] text-white rounded-md h-[48px] text-[1.25rem] w-full"
+                disabled={quantity >= product?.stocks - product?.sold}
+                variant="contained"
+                color="inherit"
+                startIcon={<GiShoppingCart/>}
               >
-                Add To Cart
-              </button>
+                <span className="font-varela font-bold">Add To Cart</span>
+              </Button>
+
+              {/* dialog */}
               <Dialog
                 open={isDialogOpen}
                 onClose={() => setIsDialogOpen(false)}
@@ -179,22 +260,9 @@ const SingleProductView = () => {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={() => setIsDialogOpen(false)}>Cancel</Button>
+                  <Button onClick={() => setIsDialogOpen(false)}>No</Button>
                   <Button
-                    onClick={() => {
-                      setCart([...cart, product]);
-                      setIsDialogOpen(false);
-                      toast.success("Added to Cart", {
-                        position: "top-center",
-                        autoClose: 2000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                      });
-                    }}
+                    onClick={handleAddToCart}
                   >
                     Add to cart
                   </Button>

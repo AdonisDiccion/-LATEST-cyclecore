@@ -21,18 +21,46 @@ import { ToastContainer, toast } from "react-toastify";
 function CustomShopCard({ p }) {
   //hooks
   const [cart, setCart] = useCart();
-
+  console.log(cart)
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [quantity, setQuantity] = useState(0);
 
   const navigate = useNavigate();
 
-  const handleMinus = () => {
-    quantity === 0 ? "" : setQuantity(quantity - 1);
-  };
 
-  const handleAdd = () => {
-    setQuantity(quantity + 1);
+  const handleAddToCart = () => {
+    // Check if item already exists in cart
+    const existingCartItem = cart.find((item) => item._id === p._id);
+    if (existingCartItem) {
+      // If item exists, update quantity
+      const updatedCart = cart.map((item) => {
+        if (item._id === p._id) {
+          return { ...item, quantity: item.quantity + 1 };
+        } else {
+          return item;
+        }
+      });
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    } else {
+      // If item does not exist, add to cart
+      setCart([...cart, { ...p, quantity: 1 }]);
+      localStorage.setItem(
+        "cart",
+        JSON.stringify([...cart, { ...p, quantity: 1 }])
+      );
+    }
+    setIsDialogOpen(false);
+    toast.success("Added to Cart", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   return (
@@ -49,8 +77,8 @@ function CustomShopCard({ p }) {
             <Badge.Ribbon text={`${p?.sold} sold`} color="red">
               <Badge.Ribbon
                 text={`${
-                  p?.quantity >= 1
-                    ? `${p?.quantity - p?.sold} in stock`
+                  p?.stocks >= 1
+                    ? `${p?.stocks - p?.sold} in stock`
                     : "Out of Stock"
                 }`}
                 placement="start"
@@ -78,25 +106,34 @@ function CustomShopCard({ p }) {
             </Box>
 
             <Box>
-              <span className="font-bold">Price: </span>
-              {p?.price?.toLocaleString("en-Us", {
-                style: "currency",
-                currency: "PHP",
-              })}
+              <span className="font-bold">Price:</span>
+              <span className="text-xl">$ {p.price}</span>
             </Box>
-            <Box gap={2} className="md:flex block ">
-              <Box gap={2} className="flex flex-col mb-3 ">
-                <Button
-                  variant="contained"
-                  color="info"
-                  className="w-[10rem]"
-                  size="small"
-                  fullWidth
-                  onClick={() => setIsDialogOpen(true)}
-                >
-                  Add to cart <FiShoppingCart size={13} className="ml-1" />
-                </Button>
-              </Box>
+            <Box className="space-x-5">
+              <Button
+                variant="contained"
+                color="inherit"
+                startIcon={<FiShoppingCart />}
+                onClick={() => setIsDialogOpen(true)}
+              >
+                <span className="font-varela">Add To Cart</span>
+              </Button>
+
+              <Button
+                variant="outlined"
+                color="inherit"
+                startIcon={<IoWarning />}
+                onClick={() => navigate(`/product/${p.slug}`)}
+              >
+                <span className="font-varela">View Product</span>
+              </Button>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+
+      {/* Dialog */}
+
               <Dialog
                 open={isDialogOpen}
                 onClose={() => setIsDialogOpen(false)}
@@ -113,45 +150,17 @@ function CustomShopCard({ p }) {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={() => setIsDialogOpen(false)}>Cancel</Button>
                   <Button
-                    onClick={() => {
-                      setCart([...cart, p]);
-                      localStorage.setItem('cart', JSON.stringify([...cart, p]))
-                      setIsDialogOpen(false);
-                      toast.success("Added to Cart", {
-                        position: "top-center",
-                        autoClose: 2000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                      });
-                    }}
+                    onClick={handleAddToCart}
                   >
                     Add to cart
                   </Button>
+                  <Button onClick={() => setIsDialogOpen(false)}>No</Button>
                 </DialogActions>
               </Dialog>
 
-              <Box>
-                <Button
-                  variant="contained"
-                  color="info"
-                  className="w-[10rem]"
-                  size="small"
-                  fullWidth
-                  onClick={() => navigate(`/product/${p.slug}`)}
-                >
-                  View Product
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-        </Grid>
-      </Grid>
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 }

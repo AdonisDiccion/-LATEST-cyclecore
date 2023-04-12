@@ -122,8 +122,8 @@ export default function AdminProducts() {
                         </div>
                         <div className="mt-3 flex justify-between items-center">
                           <p className="text-lg leading-relaxed pt-1 flex">
-                            <label className="font-bold">Quantity:</label>
-                            <label className="pl-4">{p.quantity}</label>
+                            <label className="font-bold">stocks:</label>
+                            <label className="pl-4">{p.stocks}</label>
                           </p>
                           <div className="mr-28">
                             <label className="font-bold">Sub-Category:</label>

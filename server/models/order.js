@@ -7,10 +7,12 @@ const { ObjectId } = mongoose.Schema;
 
 const orderSchema = new Schema(
   {
-    products: [{
-      type: ObjectId,
-      ref: "Product",
-    }],
+    products: [
+      {
+        type: ObjectId,
+        ref: "Product",
+      },
+    ],
     payment: {},
     buyer: {
       type: ObjectId,
@@ -20,6 +22,14 @@ const orderSchema = new Schema(
       type: String,
       default: "Not Processed",
       enum: ["Not Processed", "Processing", "Shiped", "Delivered", "Cancelled"],
+    },
+    totalQuantity: {
+      type: Number,
+      required: true,
+    },
+    totalPrice: {
+      type: Number,
+      required: true,
     },
   },
   { timestamps: true }

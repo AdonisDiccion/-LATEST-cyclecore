@@ -25,7 +25,7 @@ export const create = async (req, res) => {
       name,
       description,
       price,
-      quantity,
+      stocks,
       shipping,
       category,
       subcategory,
@@ -48,8 +48,8 @@ export const create = async (req, res) => {
         res.json({ error: "SubCategory is required" });
       case !brand.trim():
         res.json({ error: "Brand is required" });
-      case !quantity.trim():
-        res.json({ error: "Quantity is required" });
+      case !stocks.trim():
+        res.json({ error: "stocks is required" });
       case !shipping.trim():
         res.json({ error: "Shipping is required" });
       case photo && photo.size > 10000000:
@@ -73,7 +73,7 @@ export const create = async (req, res) => {
       name,
       description,
       price,
-      quantity,
+      stocks,
       shipping,
       category,
       subcategory,
@@ -118,7 +118,7 @@ export const read = async (req, res) => {
       .populate("brand")
       .populate("name")
       .populate("description")
-      .populate("quantity")
+      .populate("stocks")
       .populate("shipping")
       .populate("price")
       .populate("sold");
@@ -169,7 +169,7 @@ export const update = async (req, res) => {
       name,
       description,
       price,
-      quantity,
+      stocks,
       shipping,
       category,
       subcategory,
@@ -191,7 +191,7 @@ export const update = async (req, res) => {
         return res.json({ error: "SubCategory is required" });
       case !brand.trim():
         return res.json({ error: "Brand is required" });
-      case !quantity.trim():
+      case !stocks.trim():
         return res.json({ error: "Name is required" });
       case !shipping.trim():
         return res.json({ error: "Name is required" });
@@ -375,14 +375,16 @@ export const processPayment = async (req, res) => {
     console.log(req.body);
     const { nonce, cart } = req.body;
 
-    let total = 0;
-    cart.map((i) => {
-      total += i.price;
+    let totalPrice = 0;
+    let totalQuantity = 0;
+    cart.forEach((item) => {
+      totalPrice += item.price * item.quantity;
+      totalQuantity += item.quantity;
     });
 
     let newTransaction = gateway.transaction.sale(
       {
-        amount: total,
+        amount: totalPrice,
         paymentMethodNonce: nonce,
         options: {
           submitForSettlement: true,
@@ -395,9 +397,11 @@ export const processPayment = async (req, res) => {
             products: cart,
             payment: result,
             buyer: req.user._id,
+            totalQuantity: totalQuantity, // new field to store total quantity
+            totalPrice: totalPrice // new field to store total price
           }).save();
           //decrement Quantity
-          decrementQuantity(cart);
+          decrementStocks(cart);
           res.json({ ok: true });
         } else {
           res.status(500).send(error);
@@ -409,14 +413,14 @@ export const processPayment = async (req, res) => {
   }
 };
 
-const decrementQuantity = async (cart) => {
+const decrementStocks = async (cart) => {
   try {
     //mongodb query
     const bulkOps = cart.map((item) => {
       return {
         updateOne: {
           filter: { _id: item._id },
-          update: { $inc: { quantity: -0, sold: +1 } },
+          update: { $inc: { stocks: -0, sold: +1 } },
         },
       };
     });
@@ -458,7 +462,7 @@ const decrementQuantity = async (cart) => {
 //                 sku: i._id,
 //                 price: i.price,
 //                 currency: "USD", // Set to the currency you want to use
-//                 quantity: 1,
+//                 stocks: 1,
 //               };
 //             }),
 //           },

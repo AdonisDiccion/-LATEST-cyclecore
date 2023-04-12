@@ -42,6 +42,14 @@ const Navbar = () => {
 
   const [showCart, setShowCart] = useState(false);
 
+  const totalQuantity = () => {
+    let total = 0;
+    cart.map((item) => {
+      total += item.quantity;
+    });
+    return total;
+  };
+
   return (
     <div className="text-black ">
       <nav className="flex justify-between items-center h-24 max-w-screen-2xl mx-auto px-4 bg-white">
@@ -89,7 +97,7 @@ const Navbar = () => {
             <div className="h-0.5 bg-[#77830b] scale-x-0 group-hover:scale-100 transition-transform origin-center rounded-full duration-500 ease-out"></div>
           </NavLink>
           <Badge
-            count={cart?.length >= 1 ? cart.length : 0}
+            count={totalQuantity()}
             offset={[-5, 10]}
             showZero={true}
             onClick={() => setShowCart(!showCart)}

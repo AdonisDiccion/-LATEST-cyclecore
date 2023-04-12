@@ -33,7 +33,7 @@ export default function AdminCreateProduct() {
   const [subcategory, setSubcategory] = useState("");
   const [brand, setBrand] = useState("");
   const [shipping, setShipping] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [stocks, setStocks] = useState("");
 
   const navigate = useNavigate();
 
@@ -87,7 +87,7 @@ export default function AdminCreateProduct() {
       productData.append("category", category);
       productData.append("subcategory", subcategory);
       productData.append("brand", brand);
-      productData.append("quantity", quantity);
+      productData.append("stocks", stocks);
       productData.append("shipping", shipping);
       productData.append("price", price);
 
@@ -263,7 +263,7 @@ export default function AdminCreateProduct() {
               <div className="pt-5 ">
                 <TextField
                   type="number"
-                  name="quantity"
+                  name="stocks"
                   placeholder="Price"
                   label="Price"
                   size="small"
@@ -274,17 +274,17 @@ export default function AdminCreateProduct() {
               </div>
             </div>
             <div className="pt-5 ">
-              <h1 className="text-lg">Quantity :</h1>
+              <h1 className="text-lg">stocks :</h1>
               <div className="pt-5 ">
                 <TextField
                   type="number"
-                  name="quantity"
-                  placeholder="Quantity"
-                  label="Quantity"
+                  name="stocks"
+                  placeholder="stocks"
+                  label="stocks"
                   size="small"
                   fullWidth
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
+                  value={stocks}
+                  onChange={(e) => setStocks(e.target.value)}
                   InputProps={{
                     inputProps: {
                       min: 1,

@@ -32,7 +32,7 @@ export default function AdminUpdateProduct() {
   const [subcategory, setSubcategory] = useState("");
   const [brand, setBrand] = useState("");
   const [shipping, setShipping] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [stocks, setStocks] = useState("");
   const [id, setId] = useState("");
 
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ export default function AdminUpdateProduct() {
       setCategory(data.category._id);
       setSubcategory(data.subcategory._id);
       setBrand(data.brand._id);
-      setQuantity(data.quantity);
+      setStocks(data.stocks);
       setShipping(data.shipping);
       setId(data._id);
       console.log("data =>", data);
@@ -110,7 +110,7 @@ export default function AdminUpdateProduct() {
       productData.append("category", category);
       productData.append("subcategory", subcategory);
       productData.append("brand", brand);
-      productData.append("quantity", quantity);
+      productData.append("stocks", stocks);
       productData.append("shipping", shipping);
       productData.append("price", price);
 
@@ -322,7 +322,7 @@ export default function AdminUpdateProduct() {
               <div className="pt-5 ">
                 <TextField
                   type="number"
-                  name="quantity"
+                  name="stocks"
                   placeholder="Price"
                   label="Price"
                   size="small"
@@ -333,17 +333,17 @@ export default function AdminUpdateProduct() {
               </div>
             </div>
             <div className="pt-5 ">
-              <h1 className="text-lg">Quantity :</h1>
+              <h1 className="text-lg">stocks :</h1>
               <div className="pt-5 ">
                 <TextField
                   type="number"
-                  name="quantity"
-                  placeholder="Quantity"
-                  label="Quantity"
+                  name="stocks"
+                  placeholder="stocks"
+                  label="stocks"
                   size="small"
                   fullWidth
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
+                  value={stocks}
+                  onChange={(e) => setStocks(e.target.value)}
                   InputProps={{
                     inputProps: {
                       min: 1,
